@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Resume Analyzer</title>
+
+<style>
+body {
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+    color:white;
+    text-align:center;
+}
+
+.container {
+    max-width:700px;
+    margin:auto;
+    padding:20px;
+}
+
+.card {
+    background:rgba(255,255,255,0.05);
+    padding:20px;
+    margin-top:20px;
+    border-radius:12px;
+}
+
+button {
+    padding:10px 20px;
+    background:#22c55e;
+    border:none;
+    border-radius:8px;
+}
+
+.progress {
+    width:100%;
+    background:#333;
+    border-radius:10px;
+}
+
+.progress-bar {
+    height:20px;
+    background:#22c55e;
+    width: {{ score if score else 0 }}%;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🚀 Resume Analyzer</h1>
+
+<form method="POST" enctype="multipart/form-data">
+<input type="file" name="resume">
+<br><br>
+<button>Analyze</button>
+</form>
+
+{% if score is defined %}
+<div class="card">
+<h3>Score</h3>
+<div class="progress">
+<div class="progress-bar"></div>
+</div>
+<p>{{score}} / 100</p>
+</div>
+
+<div class="card">
+<h3>Category</h3>
+<p>{{category}}</p>
+</div>
+
+<div class="card">
+<h3>Skills</h3>
+<p>{{skills}}</p>
+</div>
+
+<div class="card">
+<h3>Suggestions</h3>
+<ul>
+{% for s in suggestions %}
+<li>{{s}}</li>
+{% endfor %}
+</ul>
+</div>
+
+<div class="card">
+<h3>Job Match %</h3>
+<ul>
+{% for role, value in jobs.items() %}
+<li>{{role}} → {{value}}%</li>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+</div>
+
+</body>
+</html>
